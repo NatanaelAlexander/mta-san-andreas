@@ -683,6 +683,32 @@ import backgroundMusic from "../assets/musicaFondoBucle2.mp3";
     const audioControl = document.getElementById('audioControl');
     const muteLine = document.getElementById('muteLine');
     let isPlaying = true;
+    let triedAutoPlay = false;
+
+    function tryPlayMusic() {
+      if (!audio) return;
+      audio.volume = 0.4;
+      muteLine && muteLine.classList.add('hidden');
+      audio.play().then(() => {
+        isPlaying = true;
+      }).catch(() => {
+        isPlaying = false;
+      });
+    }
+
+    function enableMusicOnFirstInteraction() {
+      const playOnInteraction = () => {
+        tryPlayMusic();
+        window.removeEventListener('click', playOnInteraction);
+        window.removeEventListener('keydown', playOnInteraction);
+        window.removeEventListener('touchstart', playOnInteraction);
+        window.removeEventListener('scroll', playOnInteraction);
+      };
+      window.addEventListener('click', playOnInteraction);
+      window.addEventListener('keydown', playOnInteraction);
+      window.addEventListener('touchstart', playOnInteraction);
+      window.addEventListener('scroll', playOnInteraction);
+    }
 
     if (audioControl && audio && muteLine) {
       audioControl.addEventListener('click', () => {
@@ -690,21 +716,20 @@ import backgroundMusic from "../assets/musicaFondoBucle2.mp3";
           audio.pause();
           muteLine.classList.remove('hidden');
         } else {
-          audio.play().catch(error => {
-            console.log("Reproducción automática bloqueada por el navegador");
-          });
+          tryPlayMusic();
           muteLine.classList.add('hidden');
         }
         isPlaying = !isPlaying;
       });
 
       // Intentar reproducción automática
-      audio.volume = 0.4; // Volumen al 40%
-      muteLine.classList.add('hidden');
-      audio.play().catch(error => {
-        console.log("Reproducción automática bloqueada por el navegador");
-        isPlaying = true;
-      });
+      tryPlayMusic();
+      setTimeout(() => {
+        if (audio.paused && !triedAutoPlay) {
+          enableMusicOnFirstInteraction();
+          triedAutoPlay = true;
+        }
+      }, 500);
     }
   });
 </script>
