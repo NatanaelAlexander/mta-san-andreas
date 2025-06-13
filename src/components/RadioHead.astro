@@ -1,10 +1,87 @@
 ---
-/* Creo que esto es js */
+import RadioHeadSection from './RadioHeadSection.astro';
+import FeaturesSection from './FeaturesSection.astro';
+import CommunitySection from './CommunitySection.astro';
+import JoinSection from './JoinSection.astro';
 ---
-
-<!-- esto es html -->
-<div>
-    <h1 class="text-red-500">Base proyecto</h1>
-</div>
-<!-- Esto es css de toda la vida -->
+<!-- esto es html --><!-- Esto es css de toda la vida -->
 <style></style>
+
+<!-- Parallax Layout -->
+<main class="relative w-full h-screen overflow-x-hidden">
+  <section class="parallax-section">
+    <RadioHeadSection />
+  </section>
+  <section class="parallax-section">
+    <FeaturesSection />
+  </section>
+  <section class="parallax-section">
+    <CommunitySection />
+  </section>
+  <section class="parallax-section">
+    <JoinSection />
+  </section>
+</main>
+
+<style>
+  .parallax-section {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    scroll-snap-align: start;
+    overflow: hidden;
+  }
+  main {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    height: 100vh;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(147, 51, 234, 0.5) rgba(17, 24, 39, 0.3);
+  }
+
+  /* Estilos para WebKit (Chrome, Safari, etc) */
+  main::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  main::-webkit-scrollbar-track {
+    background: rgba(17, 24, 39, 0.3);
+    backdrop-filter: blur(8px);
+  }
+
+  main::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, rgba(147, 51, 234, 0.5), rgba(126, 34, 206, 0.7));
+    border-radius: 4px;
+  }
+
+  main::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, rgba(147, 51, 234, 0.7), rgba(126, 34, 206, 0.9));
+  }
+</style>
+
+<script>
+    // Navbar mobile toggle
+    let menuBtn: HTMLElement | null,
+        mobileMenu: HTMLElement | null,
+        closeMenu: HTMLElement | null;
+    function setupMenu() {
+        menuBtn = document.getElementById("menu-btn");
+        mobileMenu = document.getElementById("mobile-menu");
+        closeMenu = document.getElementById("close-menu");
+        if (menuBtn && mobileMenu) {
+            menuBtn.onclick = () => {
+                mobileMenu!.style.transform = "translateY(0)";
+            };
+        }
+        if (closeMenu && mobileMenu) {
+            closeMenu.onclick = () => {
+                mobileMenu!.style.transform = "translateY(-100%)";
+            };
+        }
+    }
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", setupMenu);
+    } else {
+        setupMenu();
+    }
+</script>
