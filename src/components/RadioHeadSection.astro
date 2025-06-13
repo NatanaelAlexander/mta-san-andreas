@@ -3,6 +3,7 @@
 import { Image } from "astro:assets";
 import fondoHeader from "../assets/fondoEditado1080.png";
 import logoLSRP from "../assets/LSRP_SINFONDO.png";
+import backgroundMusic from "../assets/musicaFondoBucle2.mp3";
 ---
 
 <!-- Importación de la fuente -->
@@ -10,6 +11,28 @@ import logoLSRP from "../assets/LSRP_SINFONDO.png";
   href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Black+Ops+One&display=swap"
   rel="stylesheet"
 />
+
+<!-- Audio Element -->
+<audio id="bgMusic" loop class="hidden">
+  <source src={backgroundMusic} type="audio/mpeg">
+  Tu navegador no soporta el elemento de audio.
+</audio>
+
+<!-- Audio Control Button -->
+<button
+  id="audioControl"
+  class="fixed bottom-4 right-4 z-50 bg-purple-900/80 hover:bg-purple-800 transition-all duration-300 rounded-full p-3 backdrop-blur-sm border border-purple-500/30 shadow-lg group"
+  aria-label="Control de música"
+>
+  <div class="relative">
+    <!-- Icono de música -->
+    <svg class="w-6 h-6 text-white opacity-80 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path id="musicIcon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+    </svg>
+    <!-- Línea diagonal para mute -->
+    <div id="muteLine" class="hidden absolute top-1/2 left-1/2 w-8 h-0.5 bg-white/90 -translate-x-1/2 -translate-y-1/2 rotate-45 transform origin-center"></div>
+  </div>
+</button>
 
 <section
   class="relative w-full h-screen flex flex-col bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 overflow-hidden font-['Space_Grotesk']"
@@ -495,6 +518,27 @@ import logoLSRP from "../assets/LSRP_SINFONDO.png";
   .slide-title {
     animation: title-float 3s ease-in-out infinite;
   }
+
+  /* Animación para el botón de música */
+  @keyframes pulse-border {
+    0% {
+      box-shadow: 0 0 0 0 rgba(147, 51, 234, 0.4);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(147, 51, 234, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(147, 51, 234, 0);
+    }
+  }
+
+  #audioControl {
+    animation: pulse-border 2s infinite;
+  }
+
+  #audioControl:hover {
+    animation: none;
+  }
 </style>
 
 <script>
@@ -632,4 +676,35 @@ import logoLSRP from "../assets/LSRP_SINFONDO.png";
   } else {
     setupCarousel();
   }
+
+  // Control de música de fondo
+  document.addEventListener('DOMContentLoaded', () => {
+    const audio = document.getElementById('bgMusic') as HTMLAudioElement;
+    const audioControl = document.getElementById('audioControl');
+    const muteLine = document.getElementById('muteLine');
+    let isPlaying = true;
+
+    if (audioControl && audio && muteLine) {
+      audioControl.addEventListener('click', () => {
+        if (isPlaying) {
+          audio.pause();
+          muteLine.classList.remove('hidden');
+        } else {
+          audio.play().catch(error => {
+            console.log("Reproducción automática bloqueada por el navegador");
+          });
+          muteLine.classList.add('hidden');
+        }
+        isPlaying = !isPlaying;
+      });
+
+      // Intentar reproducción automática
+      audio.volume = 0.4; // Volumen al 40%
+      muteLine.classList.add('hidden');
+      audio.play().catch(error => {
+        console.log("Reproducción automática bloqueada por el navegador");
+        isPlaying = true;
+      });
+    }
+  });
 </script>
