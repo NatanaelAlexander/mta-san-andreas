@@ -1,16 +1,8 @@
-# Astro Starter Kit: Basics
+# MTA San Andreas
 
-```sh
-pnpm create astro@latest -- --template basics
-```
+A modern web application for MTA San Andreas, built with Astro and deployed on Cloudflare Pages.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+[![Deployed on Cloudflare Pages](https://img.shields.io/badge/Deployed%20on-Cloudflare%20Pages-blue)](https://mta-san-andreas.pages.dev)
 
 ## 🚀 Project Structure
 
@@ -28,7 +20,12 @@ Inside of your Astro project, you'll see the following folders and files:
 └── package.json
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## 🛠️ Tech Stack
+
+- **Framework**: [Astro](https://astro.build)
+- **Package Manager**: [pnpm](https://pnpm.io)
+- **Deployment**: [Cloudflare Pages](https://pages.cloudflare.com)
+- **Domain**: [mta-san-andreas.pages.dev](https://mta-san-andreas.pages.dev)
 
 ## 🧞 Commands
 
@@ -36,13 +33,21 @@ All commands are run from the root of the project, from a terminal:
 
 | Command                   | Action                                           |
 | :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+| `pnpm install`           | Installs dependencies                            |
+| `pnpm dev`               | Starts local dev server at `localhost:4321`      |
+| `pnpm build`             | Build your production site to `./dist/`          |
+| `pnpm preview`           | Preview your build locally, before deploying     |
+| `pnpm astro ...`         | Run CLI commands like `astro add`, `astro check` |
+| `pnpm astro -- --help`   | Get help using the Astro CLI                     |
+
+## 🚀 Deployment
+
+This project is automatically deployed to Cloudflare Pages. Any push to the main branch will trigger a new deployment.
+
+- **Production URL**: [mta-san-andreas.pages.dev](https://mta-san-andreas.pages.dev)
+- **Build Command**: `pnpm build`
+- **Build Output Directory**: `dist`
 
 ## 👀 Want to learn more?
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Feel free to check [Astro's documentation](https://docs.astro.build) or jump into their [Discord server](https://astro.build/chat).
